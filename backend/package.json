@@ -1,0 +1,12 @@
+{
+  "name": "regle-de-trois-backend",
+  "version": "1.0.0",
+  "description": "Backend for Règle de Trois multiplayer game",
+  "main": "server.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": ["game", "multiplayer", "node.js"],
+  "author": "Your Name",
+  "license": "ISC"
+}

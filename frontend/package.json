@@ -1,0 +1,12 @@
+{
+  "name": "regle-de-trois-frontend",
+  "version": "1.0.0",
+  "description": "Frontend for Règle de Trois multiplayer game",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "keywords": ["game", "react", "typescript"],
+  "author": "Your Name",
+  "license": "ISC"
+}
