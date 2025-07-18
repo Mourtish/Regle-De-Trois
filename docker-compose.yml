@@ -1,6 +1,7 @@
 services:
   db:
     image: postgres:latest
+    container_name: regle-de-trois-db
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
@@ -18,14 +19,16 @@ services:
       retries: 10
       start_period: 10s
   backend:
+    image: regle-de-trois-backend
     build: ./backend
+    container_name: regle-de-trois-backend
     ports:
       - "3001:3001"
     depends_on:
       db:
         condition: service_healthy
     environment:
-      - DATABASE_URL=postgresql://user:password@db:5432/regle_de_trois?schema=public
+      - DATABASE_URL=postgresql://user:password@regle-de-trois-db:5432/regle_de_trois?schema=public
       - NODE_ENV=development
       - PORT=3001
     networks:

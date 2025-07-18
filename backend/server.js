@@ -12,7 +12,7 @@ const PORT = process.env.PORT || 3001;
 
 // Initialize Prisma with retry logic
 const prisma = new PrismaClient();
-async function connectWithRetry(retries = 5, delay = 2000) {
+async function connectWithRetry(retries = 10, delay = 5000) {
   for (let i = 0; i < retries; i++) {
     try {
       await prisma.$connect();
