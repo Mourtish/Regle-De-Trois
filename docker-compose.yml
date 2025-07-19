@@ -1,50 +1,43 @@
+version: '3.8'
 services:
   db:
     image: postgres:latest
-    container_name: regle-de-trois-db
     environment:
       POSTGRES_USER: user
       POSTGRES_PASSWORD: password
       POSTGRES_DB: regle_de_trois
-    ports:
-      - "5432:5432"
     volumes:
       - db_data:/var/lib/postgresql/data
-    networks:
-      - app-network
+    ports:
+      - "5432:5432"
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U user -d regle_de_trois"]
+      test: ["CMD-SHELL", "pg_isready -U user"]
       interval: 5s
-      timeout: 10s
-      retries: 10
-      start_period: 10s
+      timeout: 5s
+      retries: 5
+
   backend:
-    image: regle-de-trois-backend
     build: ./backend
-    container_name: regle-de-trois-backend
+    environment:
+      DATABASE_URL: postgresql://user:password@db:5432/regle_de_trois?schema=public
     ports:
       - "3001:3001"
     depends_on:
       db:
         condition: service_healthy
-    environment:
-      - DATABASE_URL=postgresql://user:password@regle-de-trois-db:5432/regle_de_trois?schema=public
-      - NODE_ENV=development
-      - PORT=3001
-    networks:
-      - app-network
+    volumes:
+      - ./backend:/app
+    command: npm run dev
+
   frontend:
-    image: regle-de-trois-frontend
     build: ./frontend
-    container_name: regle-de-trois-frontend
     ports:
       - "3000:3000"
     depends_on:
       - backend
-    networks:
-      - app-network
+    volumes:
+      - ./frontend:/app
+    command: npm start
+
 volumes:
   db_data:
-networks:
-  app-network:
-    driver: bridge
