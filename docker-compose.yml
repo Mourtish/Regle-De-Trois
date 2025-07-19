@@ -33,14 +33,16 @@ services:
       - PORT=3001
     networks:
       - app-network
-  # frontend:
-  #   build: ./frontend
-  #   ports:
-  #     - "3000:3000"
-  #   depends_on:
-  #     - backend
-  #   networks:
-  #     - app-network
+  frontend:
+    image: regle-de-trois-frontend
+    build: ./frontend
+    container_name: regle-de-trois-frontend
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+    networks:
+      - app-network
 volumes:
   db_data:
 networks:
